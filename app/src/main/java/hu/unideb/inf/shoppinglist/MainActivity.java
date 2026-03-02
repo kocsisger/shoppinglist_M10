@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
 import androidx.activity.result.ActivityResult;
@@ -17,12 +18,16 @@ import androidx.core.view.WindowInsetsCompat;
 
 public class MainActivity extends AppCompatActivity {
 
+    TextView shoppingLIstTextView;
+
     ActivityResultLauncher activityResultLauncher = registerForActivityResult(
             new ActivityResultContracts.StartActivityForResult(),
             activityResult -> {
-                Log.d("ITEMS_TEST", "I have returned");
                 String item = activityResult.getData().getStringExtra("ITEM");
+                Log.d("ITEMS_TEST", "I have returned");
                 Log.d("ITEMS_TEST", item);
+
+                shoppingLIstTextView.append(item + "\n");
             }
     );
 
@@ -36,6 +41,8 @@ public class MainActivity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+
+        shoppingLIstTextView = findViewById(R.id.shoppingListTextView);
     }
 
     public void handleAddButton(View view) {
