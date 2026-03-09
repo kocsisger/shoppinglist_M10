@@ -11,6 +11,7 @@ import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
@@ -18,7 +19,10 @@ import androidx.core.view.WindowInsetsCompat;
 
 public class MainActivity extends AppCompatActivity {
 
+    private static final String TEXTVIEW_CONTENTS = "TEXTVIEW_CONTENTS";
     TextView shoppingLIstTextView;
+
+
 
     ActivityResultLauncher activityResultLauncher = registerForActivityResult(
             new ActivityResultContracts.StartActivityForResult(),
@@ -46,6 +50,14 @@ public class MainActivity extends AppCompatActivity {
         });
 
         shoppingLIstTextView = findViewById(R.id.shoppingListTextView);
+        if (savedInstanceState!=null)
+            shoppingLIstTextView.setText(savedInstanceState.getString(TEXTVIEW_CONTENTS));
+    }
+
+    @Override
+    protected void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putString(TEXTVIEW_CONTENTS, shoppingLIstTextView.getText().toString());
     }
 
     public void handleAddButton(View view) {
